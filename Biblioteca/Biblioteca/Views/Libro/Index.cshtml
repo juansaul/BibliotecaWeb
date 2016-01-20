@@ -3,12 +3,13 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Biblioteca.Models.Libro nuevoLibro = new Biblioteca.Models.Libro();
 }
 
 <h2>Index</h2>
-
+<a data-toggle="modal" data-target="#modalAlta">Nuevo libro</a>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @* @Html.ActionLink("Create New", "Create")*@ 
 </p>
 <table class="table">
     <tr>
@@ -68,3 +69,26 @@
 }
 
 </table>
+
+<div id="modalAlta" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" dat-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registro de nuevo libro</h4>
+            </div>
+
+            <div class="modal-body">
+                    @Html.Partial("Create", nuevoLibro)
+                    <p>Modal para Crear un nuevo libro</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dissmiss="modal">Salir</button>
+           </div>
+
+            
+        </div>
+    </div>
+</div>
