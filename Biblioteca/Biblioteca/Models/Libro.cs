@@ -29,7 +29,7 @@ namespace Biblioteca.Models
 
         public Image imagenPortada { get; set; }
 
-        public virtual ICollection<Ejemplar> Ejemplares { get; set; }
+        public virtual ICollection<Ejemplar> ejemplares { get; set; }
 
     }
 }

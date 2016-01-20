@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.Models
 {
-    class Ejemplar
+    public class Ejemplar
     {
         [Key]
         public int idEjemplar { get; set; }
 
         public String nombreLibro { get; set; }
 
-        public virtual Libro libroId { get; set; }
+        public virtual  Libro libroId { get; set; }
 
     }
 }
