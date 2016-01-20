@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.Models
 {
-    class Prestamo
+    public class Prestamo
     {
         public int idPrestamo { get; set; }
         
@@ -16,7 +16,7 @@ namespace Biblioteca.Models
 
         public DateTime fechaEntrega { get; set; }
 
-        public virtual Usuario usuario { get; set; }
+        public virtual Usuario usuarioID { get; set; }
 
         public virtual Ejemplar idEjemplar { get; set; }
     }
