@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibroController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PrestamoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DAL\Contexto.cs" />
     <Compile Include="Global.asax.cs">
@@ -208,6 +209,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Libro.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Prestamo.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -283,6 +285,11 @@
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Prestamo\Create.cshtml" />
+    <Content Include="Views\Prestamo\Delete.cshtml" />
+    <Content Include="Views\Prestamo\Details.cshtml" />
+    <Content Include="Views\Prestamo\Edit.cshtml" />
+    <Content Include="Views\Prestamo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

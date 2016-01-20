@@ -10,9 +10,9 @@ namespace Biblioteca.Models
     {
         //llave primaria
         [Key]
-        public int PrestamoID { get; set; }
+        public string usuarioID { get; set; }
 
-      
+
 
         public string nombre { get; set; }
 
@@ -25,6 +25,9 @@ namespace Biblioteca.Models
         public string direccion { get; set; }
 
         public string curp { get; set; }
+
+
+        public virtual ICollection<Prestamo> prestamo { get; set; }
 
     }
 }
