@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.Models
 {
-    class Prestamo
+     class Prestamo
     {
         [Key]
         public int idPrestamo { get; set; }
