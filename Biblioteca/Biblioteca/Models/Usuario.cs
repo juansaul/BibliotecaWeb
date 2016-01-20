@@ -12,19 +12,19 @@ namespace Biblioteca.Models
         [Key]
         public int PrestamoID { get; set; }
 
-        public int noControl { get; set; }
+      
 
         public string nombre { get; set; }
 
-        public string apellidoP { get; set; }
+        public string apellido { get; set; }
 
-        public string apellidoM { get; set; }
+        public int Telefono { get; set; }
 
         public string correo {get;set;}
 
-        public int cuatrimestre { get; set; }
+        public string direccion { get; set; }
 
-        public string grupo { get; set; }
+        public string curp { get; set; }
 
     }
 }

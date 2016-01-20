@@ -11,17 +11,17 @@ using Biblioteca.Models;
 
 namespace Biblioteca.Controllers
 {
-    public class UsuariosController : Controller
+    public class UsuarioController : Controller
     {
         private Contexto db = new Contexto();
 
-        // GET: Usuarios
+        // GET: Usuario
         public ActionResult Index()
         {
             return View(db.Usuarios.ToList());
         }
 
-        // GET: Usuarios/Details/5
+        // GET: Usuario/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,13 +36,13 @@ namespace Biblioteca.Controllers
             return View(usuario);
         }
 
-        // GET: Usuarios/Create
+        // GET: Usuario/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuarios/Create
+        // POST: Usuario/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -59,7 +59,7 @@ namespace Biblioteca.Controllers
             return View(usuario);
         }
 
-        // GET: Usuarios/Edit/5
+        // GET: Usuario/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,7 +74,7 @@ namespace Biblioteca.Controllers
             return View(usuario);
         }
 
-        // POST: Usuarios/Edit/5
+        // POST: Usuario/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -90,7 +90,7 @@ namespace Biblioteca.Controllers
             return View(usuario);
         }
 
-        // GET: Usuarios/Delete/5
+        // GET: Usuario/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +105,7 @@ namespace Biblioteca.Controllers
             return View(usuario);
         }
 
-        // POST: Usuarios/Delete/5
+        // POST: Usuario/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
