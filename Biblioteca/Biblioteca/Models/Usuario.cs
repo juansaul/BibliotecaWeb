@@ -27,7 +27,6 @@ namespace Biblioteca.Models
         public string curp { get; set; }
 
 
-        public virtual ICollection<Prestamo> prestamo { get; set; }
 
     }
 }
