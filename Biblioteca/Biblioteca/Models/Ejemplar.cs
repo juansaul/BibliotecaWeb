@@ -14,7 +14,7 @@ namespace Biblioteca.Models
 
         public String nombreLibro { get; set; }
 
-        public virtual Libro libroId { get; set; }
+        public virtual  Libro libroId { get; set; }
 
     }
 }

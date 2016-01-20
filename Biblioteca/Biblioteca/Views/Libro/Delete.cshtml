@@ -1,4 +1,4 @@
-﻿@model Biblioteca.Models.Usuario
+﻿@model Biblioteca.Models.Libro
 
 @{
     ViewBag.Title = "Delete";
@@ -9,7 +9,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Usuario</h4>
+    <h4>Libro</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,43 +21,51 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.apellido)
+            @Html.DisplayNameFor(model => model.isbn)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.apellido)
+            @Html.DisplayFor(model => model.isbn)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
+            @Html.DisplayNameFor(model => model.autor)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Telefono)
+            @Html.DisplayFor(model => model.autor)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.correo)
+            @Html.DisplayNameFor(model => model.editorial)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.correo)
+            @Html.DisplayFor(model => model.editorial)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.direccion)
+            @Html.DisplayNameFor(model => model.descripcion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.direccion)
+            @Html.DisplayFor(model => model.descripcion)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.curp)
+            @Html.DisplayNameFor(model => model.año)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.curp)
+            @Html.DisplayFor(model => model.año)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.noEjemplares)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.noEjemplares)
         </dd>
 
     </dl>

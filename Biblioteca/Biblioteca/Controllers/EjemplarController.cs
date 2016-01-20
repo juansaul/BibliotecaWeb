@@ -11,107 +11,107 @@ using Biblioteca.Models;
 
 namespace Biblioteca.Controllers
 {
-    public class UsuarioController : Controller
+    public class EjemplarController : Controller
     {
         private Contexto db = new Contexto();
 
-        // GET: Usuario
+        // GET: Ejemplar
         public ActionResult Index()
         {
-            return View(db.Usuarios.ToList());
+            return View(db.Ejemplares.ToList());
         }
 
-        // GET: Usuario/Details/5
-        public ActionResult Details(string id)
+        // GET: Ejemplar/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            if (ejemplar == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(ejemplar);
         }
 
-        // GET: Usuario/Create
+        // GET: Ejemplar/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuario/Create
+        // POST: Ejemplar/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "idEjemplar,nombreLibro")] Ejemplar ejemplar)
         {
             if (ModelState.IsValid)
             {
-                db.Usuarios.Add(usuario);
+                db.Ejemplares.Add(ejemplar);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(usuario);
+            return View(ejemplar);
         }
 
-        // GET: Usuario/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Ejemplar/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            if (ejemplar == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(ejemplar);
         }
 
-        // POST: Usuario/Edit/5
+        // POST: Ejemplar/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        public ActionResult Edit([Bind(Include = "idEjemplar,nombreLibro")] Ejemplar ejemplar)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(usuario).State = EntityState.Modified;
+                db.Entry(ejemplar).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(usuario);
+            return View(ejemplar);
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Ejemplar/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            if (ejemplar == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(ejemplar);
         }
 
-        // POST: Usuario/Delete/5
+        // POST: Ejemplar/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Usuario usuario = db.Usuarios.Find(id);
-            db.Usuarios.Remove(usuario);
+            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            db.Ejemplares.Remove(ejemplar);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -11,107 +11,107 @@ using Biblioteca.Models;
 
 namespace Biblioteca.Controllers
 {
-    public class UsuarioController : Controller
+    public class PrestamoController : Controller
     {
         private Contexto db = new Contexto();
 
-        // GET: Usuario
+        // GET: Prestamo
         public ActionResult Index()
         {
-            return View(db.Usuarios.ToList());
+            return View(db.Prestamos.ToList());
         }
 
-        // GET: Usuario/Details/5
-        public ActionResult Details(string id)
+        // GET: Prestamo/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Prestamo prestamo = db.Prestamos.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(prestamo);
         }
 
-        // GET: Usuario/Create
+        // GET: Prestamo/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuario/Create
+        // POST: Prestamo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "idPrestamo,nombre,fechaPrestamo,fechaEntrega")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
-                db.Usuarios.Add(usuario);
+                db.Prestamos.Add(prestamo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(usuario);
+            return View(prestamo);
         }
 
-        // GET: Usuario/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Prestamo/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Prestamo prestamo = db.Prestamos.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(prestamo);
         }
 
-        // POST: Usuario/Edit/5
+        // POST: Prestamo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        public ActionResult Edit([Bind(Include = "idPrestamo,nombre,fechaPrestamo,fechaEntrega")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(usuario).State = EntityState.Modified;
+                db.Entry(prestamo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(usuario);
+            return View(prestamo);
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Prestamo/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            Prestamo prestamo = db.Prestamos.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            return View(usuario);
+            return View(prestamo);
         }
 
-        // POST: Usuario/Delete/5
+        // POST: Prestamo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Usuario usuario = db.Usuarios.Find(id);
-            db.Usuarios.Remove(usuario);
+            Prestamo prestamo = db.Prestamos.Find(id);
+            db.Prestamos.Remove(prestamo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
