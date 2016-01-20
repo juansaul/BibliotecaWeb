@@ -18,6 +18,6 @@ namespace Biblioteca.DAL
         //Defnicion de tablas a partir de las entidades
         public DbSet<Libro> Libros { get; set; }
 
-        public System.Data.Entity.DbSet<Biblioteca.Models.Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 }
