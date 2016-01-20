@@ -19,5 +19,7 @@ namespace Biblioteca.DAL
         public DbSet<Libro> Libros { get; set; }
 
         public System.Data.Entity.DbSet<Biblioteca.Models.Usuario> Usuarios { get; set; }
+
+        public System.Data.Entity.DbSet<Biblioteca.Models.Prestamo> Prestamoes { get; set; }
     }
 }
