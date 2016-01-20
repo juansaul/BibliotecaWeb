@@ -14,11 +14,15 @@ namespace Biblioteca.Models
 
         public String nombre { set; get; }
 
+        public String isbn { set; get; }
+
         public String autor { set; get; }
 
         public String editorial { set; get; }
 
         public int año { get; set; }
+
+        public int noEjemplares { get; set; }
 
     }
 }
