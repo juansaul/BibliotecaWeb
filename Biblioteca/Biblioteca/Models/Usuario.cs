@@ -27,7 +27,5 @@ namespace Biblioteca.Models
         public string curp { get; set; }
 
 
-
-
     }
 }

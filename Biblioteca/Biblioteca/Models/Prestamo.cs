@@ -18,7 +18,7 @@ namespace Biblioteca.Models
 
         public DateTime fechaEntrega { get; set; }
 
-        public virtual Usuario usuario { get; set; }
+        public virtual Usuario usuarioID { get; set; }
 
         public virtual Ejemplar idEjemplar { get; set; }
     }

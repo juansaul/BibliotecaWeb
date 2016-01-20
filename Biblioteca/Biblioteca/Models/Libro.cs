@@ -27,8 +27,6 @@ namespace Biblioteca.Models
 
         public int noEjemplares { get; set; }
 
-        public Image imagenPortada { get; set; }
-
         public virtual ICollection<Ejemplar> ejemplares { get; set; }
 
     }
