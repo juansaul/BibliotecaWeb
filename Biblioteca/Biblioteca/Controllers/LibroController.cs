@@ -15,6 +15,26 @@ namespace Biblioteca.Controllers
     {
         private Contexto db = new Contexto();
 
+
+        public JsonResult AjaxIndex(String strBuscado)
+        {
+            //var alumnos = db.alumnos.ToList();
+
+            var libros = from Libro in db.Libros
+                          where Libro.nombre.Contains(strBuscado)
+                          select new
+                          {
+                              libroId = Libro.libroId,
+                              nombre = Libro.nombre,
+                              isbn = Libro.isbn,
+                              autor = Libro.autor,
+                              editorial = Libro.editorial,
+                              año = Libro.año,
+                              noEjemplares = Libro.noEjemplares
+                          };
+
+            return Json(libros, JsonRequestBehavior.AllowGet);
+        }
         // GET: Libro
         public ActionResult Index()
         {
@@ -88,6 +108,38 @@ namespace Biblioteca.Controllers
                 return RedirectToAction("Index");
             }
             return View(libro);
+        }
+        [HttpGet]
+        public JsonResult AjaxEdit(int libroId = 0)
+        {
+            /*Un objeto instanciado del modelo de datos*/
+            Libro libro = db.Libros.Find(libroId);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(libro, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AjaxEdit(Libro libro)
+        {
+            String mensaje = String.Empty;
+
+            try
+            {
+                db.Entry(libro).State = EntityState.Modified;
+                int c = db.SaveChanges();
+                mensaje = "Se ha editado los datos del libro satisfactoriamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+
+
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Libro/Delete/5

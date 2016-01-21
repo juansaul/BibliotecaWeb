@@ -6,12 +6,15 @@
     Biblioteca.Models.Libro nuevoLibro = new Biblioteca.Models.Libro();
 }
 
-<h2>Index</h2>
-<a data-toggle="modal" data-target="#modalAlta">Nuevo libro</a>
+@*<h2>Index</h2>*@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAlta" style="margin-top: 20px">Nuevo Libro</button>
+
 <p>
     @* @Html.ActionLink("Create New", "Create")*@ 
 </p>
-<table class="table">
+<input type="text" name="strBuscado" value="" placeholder="Buscar Libro" />
+<button>Buscar</button>
+<table id="tablaLibros" class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -64,9 +67,9 @@
            @* @Html.ActionLink("Edit", "Edit", new { id=item.libroId }) |
                 @Html.ActionLink("Details", "Details", new { id=item.libroId }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.libroId }) *@ 
-            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" nomatricula="@item.libroId">Detalles</a> |
-            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" nomatricula="@item.libroId">Borrar</a> |
-            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" nomatricula="@item.libroId">Editar</a>
+            <button type="button" class="btn btn-info" id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" libroId="@item.libroId">Detalles</button>
+            <button type="button" class="btn btn-danger" id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" libroId="@item.libroId" style="margin-left:auto">Borrar</button>
+            <button type="button" class="btn btn-success" id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" libroId="@item.libroId">Editar</button>
         </td>
     </tr>
 }
@@ -84,7 +87,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE ALUMNO-->
-                @*Html.Partial("Details", vmAlumno)*@
+                @Html.Partial("Details", nuevoLibro)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
@@ -103,7 +106,7 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                @*Html.Partial("Delete", vmAlumno)*@
+                @Html.Partial("Delete", nuevoLibro)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -143,11 +146,11 @@
 
             <div class="modal-body">
                     @Html.Partial("Create", nuevoLibro)
-                    <p>Modal para Crear un nuevo libro</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dissmiss="modal">Salir</button>
-           </div>
+                    @*<p>Modal para Crear un nuevo libro</p>*@
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
 
             
         </div>

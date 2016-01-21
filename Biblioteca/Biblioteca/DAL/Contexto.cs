@@ -17,8 +17,8 @@ namespace Biblioteca.DAL
 
         //Defnicion de tablas a partir de las entidades
         public DbSet<Libro> Libros { get; set; }
-        public DbSet<Ejemplar> Ejemplares { get; set; }
-        public DbSet<Prestamo> Prestamos { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Ejemplar> ejemplares { get; set; }
+        public DbSet<Prestamo> prestamos { get; set; }
+        public DbSet<Usuario> usuarios { get; set; }
     }
 }

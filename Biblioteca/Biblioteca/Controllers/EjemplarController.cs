@@ -18,7 +18,7 @@ namespace Biblioteca.Controllers
         // GET: Ejemplar
         public ActionResult Index()
         {
-            return View(db.Ejemplares.ToList());
+            return View(db.ejemplares.ToList());
         }
 
         // GET: Ejemplar/Details/5
@@ -28,7 +28,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            Ejemplar ejemplar = db.ejemplares.Find(id);
             if (ejemplar == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Ejemplares.Add(ejemplar);
+                db.ejemplares.Add(ejemplar);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            Ejemplar ejemplar = db.ejemplares.Find(id);
             if (ejemplar == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ejemplar ejemplar = db.Ejemplares.Find(id);
+            Ejemplar ejemplar = db.ejemplares.Find(id);
             if (ejemplar == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ejemplar ejemplar = db.Ejemplares.Find(id);
-            db.Ejemplares.Remove(ejemplar);
+            Ejemplar ejemplar = db.ejemplares.Find(id);
+            db.ejemplares.Remove(ejemplar);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

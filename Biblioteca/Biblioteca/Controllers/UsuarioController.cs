@@ -18,7 +18,7 @@ namespace Biblioteca.Controllers
         // GET: Usuario
         public ActionResult Index()
         {
-            return View(db.Usuarios.ToList());
+            return View(db.usuarios.ToList());
         }
 
         // GET: Usuario/Details/5
@@ -28,7 +28,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
+            Usuario usuario = db.usuarios.Find(id);
             if (usuario == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Usuarios.Add(usuario);
+                db.usuarios.Add(usuario);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
+            Usuario usuario = db.usuarios.Find(id);
             if (usuario == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Usuario usuario = db.Usuarios.Find(id);
+            Usuario usuario = db.usuarios.Find(id);
             if (usuario == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Usuario usuario = db.Usuarios.Find(id);
-            db.Usuarios.Remove(usuario);
+            Usuario usuario = db.usuarios.Find(id);
+            db.usuarios.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

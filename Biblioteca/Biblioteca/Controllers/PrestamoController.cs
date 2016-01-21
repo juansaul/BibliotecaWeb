@@ -18,7 +18,7 @@ namespace Biblioteca.Controllers
         // GET: Prestamo
         public ActionResult Index()
         {
-            return View(db.Prestamos.ToList());
+            return View(db.prestamos.ToList());
         }
 
         // GET: Prestamo/Details/5
@@ -28,7 +28,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prestamo prestamo = db.Prestamos.Find(id);
+            Prestamo prestamo = db.prestamos.Find(id);
             if (prestamo == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace Biblioteca.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Prestamos.Add(prestamo);
+                db.prestamos.Add(prestamo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prestamo prestamo = db.Prestamos.Find(id);
+            Prestamo prestamo = db.prestamos.Find(id);
             if (prestamo == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace Biblioteca.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prestamo prestamo = db.Prestamos.Find(id);
+            Prestamo prestamo = db.prestamos.Find(id);
             if (prestamo == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Prestamo prestamo = db.Prestamos.Find(id);
-            db.Prestamos.Remove(prestamo);
+            Prestamo prestamo = db.prestamos.Find(id);
+            db.prestamos.Remove(prestamo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
