@@ -61,14 +61,75 @@
             @Html.DisplayFor(modelItem => item.noEjemplares)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.libroId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.libroId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.libroId })
+           @* @Html.ActionLink("Edit", "Edit", new { id=item.libroId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.libroId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.libroId }) *@ 
+            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" nomatricula="@item.libroId">Detalles</a> |
+            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" nomatricula="@item.libroId">Borrar</a> |
+            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" nomatricula="@item.libroId">Editar</a>
         </td>
     </tr>
 }
 
 </table>
+
+<div id="modalDetalles" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detalles</h4>
+            </div>
+            <div class="modal-body">
+                <!-- VISTA DE DETALLES DE ALUMNO-->
+                @*Html.Partial("Details", vmAlumno)*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalBorrar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Eliminar</h4>
+            </div>
+            <div class="modal-body">
+                @*Html.Partial("Delete", vmAlumno)*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modificar</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("Edit", nuevoLibro)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="modalAlta" class="modal fade" role="dialog">
     <div class="modal-dialog">
