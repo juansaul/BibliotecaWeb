@@ -98,8 +98,39 @@
         $("#modalEditar").modal("toggle");
     })
         
+    //----------------------------------------------------------------------------------------------------------------
+    //Juan Ajax eliminar
+    $("button#enlaceBorrar").click(function () {
+        var enlaceClickeado = $(this)
+        var noID = enlaceClickeado.attr("libroId")
+        $.ajax({
+            url: "/Libro/AjaxDelete", //Accion a ejecutar en el server
+            contentType: "application/json; charset=utf-8",
+            type: "DELETE",
+            dataType: "json",
+            data: { libroId: noID }  //Dato enviado al server
+        }).success(function (result) { //result = {mensaje, status}
+            //Se obtiene la respuesta del server en forma de objeto
+            var libro = JSON.parse(result);
 
-    
+            //Con la información recibida, se rellena el formulario
+            $("#modalBorrar #libroId").val(libro.libroId);
+            $("#modalBorrar #nombre").val(libro.nombre);
+            $("#modalBorrar #isbn").val(libro.isbn);
+            $("#modalBorrar #autor").val(libro.autor);
+            $("#modalBorrar #editorial").val(libro.editorial);
+            $("#modalBorrar #descripcion").val(libro.descripcion);
+            $("#modalBorrar input[name='año']").val(libro.año);
+            $("#modalBorrar #noEjemplares").val(libro.noEjemplares);
 
 
-})
+
+        }).error(function (xhr, status) {
+            /*Notificar al usuario de un error de comunicacion
+            con el server*/
+            $("#mensaje").removeClass('alert-danger alert-info');
+            $("#mensaje").html("Ha ocurrido un error: " + status).addClass('alert-danger');
+            $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
+        })
+    })
+    })

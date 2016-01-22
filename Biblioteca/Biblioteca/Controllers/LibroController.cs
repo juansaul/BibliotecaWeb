@@ -168,6 +168,54 @@ namespace Biblioteca.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public JsonResult AjaxDelete(int libroId = 0)
+        {
+            /*Un objeto instanciado del modelo de datos*/
+            Libro libro = db.Libros.Find(libroId);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(libro, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [HttpPost]
+        public JsonResult AjaxDelete(Libro libro)
+        {
+            String mensaje = String.Empty;
+
+
+            try
+            {
+                db.Entry(libro).State = EntityState.Deleted;
+                int c = db.SaveChanges();
+                mensaje = "Se ha eliminado libro correctamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+
+
+            }
+
+
+            //return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+
+            return Json("Response from Delete", JsonRequestBehavior.AllowGet);
+
+
+
+
+
+
+
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
