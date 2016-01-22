@@ -1,5 +1,6 @@
 ﻿$().ready(function () {
-
+    var LibroId = 0
+    //rellena la tabla de index
     function rellenarIndexLibros() {
         var strBuscado = $("input[name='strBuscado']").val();
         $.ajax({
@@ -24,9 +25,9 @@
                     "<td>" +
                      "<td>" + libro.noEjemplares + "</td>" + //fechaNac
                     "<td>" +
-                    "<a id='enlaceDetalles' data-toggle='modal' data-target='#modalDetalles' nomatricula='" + libro.libroId + "'>Detalles</a> |" +
-                    "<a id='enlaceBorrar' data-toggle='modal' data-target='#modalBorrar' nomatricula='" + libro.libroId + "'>Borrar</a> |" +
-                    "<a id='enlaceEditar' data-toggle='modal' data-target='#modalEditar' nomatricula='" + libro.libroId + "'>Editar</a> |" +
+                    "<button id='enlaceDetalles' class='btn btn-info' data-toggle='modal' data-target='#modalDetalles' libroId='" + libro.libroId + "'>Detalles</button>" +
+                    "<button id='enlaceBorrar' class='btn btn-danger' data-toggle='modal' data-target='#modalBorrar' libroId='" + libro.libroId + "' style='margin-left:auto'>Borrar</button>" +
+                    "<button id='enlaceEditar' class='btn btn-success' data-toggle='modal' data-target='#modalEditar' libroId='" + libro.libroId + "'>Editar</button>" +
                     "</td>" +
                     "</tr>")
             }
@@ -35,7 +36,9 @@
 
         })
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////7
 
+    //Selecciona el id del libro para rellenar los campos en la forma de modificar
     $("button#enlaceEditar").click(function () {
         var enlaceClickeado = $(this)
         var noID = enlaceClickeado.attr("libroId")
@@ -69,6 +72,7 @@
             $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
         })
     })
+    //una vez rellenado el formulario modificado se manda a la base de datos para aguardarlo
     $("#btnEditar").click(function () {
         libroModificado = {
             libroId: $("#modalEditar #libroId").val(),
@@ -97,40 +101,30 @@
         })
         $("#modalEditar").modal("toggle");
     })
-        
-    //----------------------------------------------------------------------------------------------------------------
-    //Juan Ajax eliminar
     $("button#enlaceBorrar").click(function () {
-        var enlaceClickeado = $(this)
-        var noID = enlaceClickeado.attr("libroId")
+        LibroId = $(this).attr("libroId")
+    })
+    //elimina un registro
+    $("button#btnBorrar").click(function () {
         $.ajax({
-            url: "/Libro/AjaxDelete", //Accion a ejecutar en el server
+            url: '/Libro/DeleteConfirmed',
             contentType: "application/json; charset=utf-8",
-            type: "DELETE",
-            dataType: "json",
-            data: { libroId: noID }  //Dato enviado al server
-        }).success(function (result) { //result = {mensaje, status}
-            //Se obtiene la respuesta del server en forma de objeto
-            var libro = JSON.parse(result);
-
-            //Con la información recibida, se rellena el formulario
-            $("#modalBorrar #libroId").val(libro.libroId);
-            $("#modalBorrar #nombre").val(libro.nombre);
-            $("#modalBorrar #isbn").val(libro.isbn);
-            $("#modalBorrar #autor").val(libro.autor);
-            $("#modalBorrar #editorial").val(libro.editorial);
-            $("#modalBorrar #descripcion").val(libro.descripcion);
-            $("#modalBorrar input[name='año']").val(libro.año);
-            $("#modalBorrar #noEjemplares").val(libro.noEjemplares);
-
-
-
+            dataType: 'json',
+            data: {libroId: LibroId }, //Dato enviado al server
+            type: 'get',
+        }).success(function (result) {
+            alert(result.mensaje)
+            rellenarIndexLibros();
         }).error(function (xhr, status) {
-            /*Notificar al usuario de un error de comunicacion
-            con el server*/
-            $("#mensaje").removeClass('alert-danger alert-info');
-            $("#mensaje").html("Ha ocurrido un error: " + status).addClass('alert-danger');
-            $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
+            alert("No se encontro el servidor," +
+                " verifique si se encuentra conectado a internet.");
+
         })
+
+
     })
-    })
+
+    
+
+
+})

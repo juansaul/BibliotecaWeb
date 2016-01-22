@@ -158,14 +158,21 @@ namespace Biblioteca.Controllers
         }
 
         // POST: Libro/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpGet]
+        public JsonResult DeleteConfirmed(int libroId=0)
         {
-            Libro libro = db.Libros.Find(id);
-            db.Libros.Remove(libro);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            String mensaje = String.Empty;
+            try {
+                Libro libro = db.Libros.Find(libroId);
+                db.Libros.Remove(libro);
+                db.SaveChanges();
+                mensaje = "Se ha eliminado el libro satisfactoriamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
