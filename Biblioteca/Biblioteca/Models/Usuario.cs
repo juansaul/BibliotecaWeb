@@ -10,7 +10,7 @@ namespace Biblioteca.Models
     {
         //llave primaria
         [Key]
-        public string usuarioID { get; set; }
+        public int usuarioID { get; set; }
 
 
 

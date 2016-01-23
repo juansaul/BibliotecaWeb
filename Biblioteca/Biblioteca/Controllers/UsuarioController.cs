@@ -22,7 +22,7 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Usuario/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -60,7 +60,7 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Usuario/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -91,7 +91,7 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Usuario/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -108,7 +108,7 @@ namespace Biblioteca.Controllers
         // POST: Usuario/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Usuario usuario = db.usuarios.Find(id);
             db.usuarios.Remove(usuario);
