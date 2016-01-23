@@ -42,18 +42,16 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Libro/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            /*Un objeto instanciado del modelo de datos*/
             Libro libro = db.Libros.Find(id);
-            if (libro == null)
-            {
-                return HttpNotFound();
-            }
-            return View(libro);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(libro, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Libro/Create
@@ -66,17 +64,26 @@ namespace Biblioteca.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "libroId,nombre,isbn,autor,editorial,descripcion,año,noEjemplares")] Libro libro)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Create(Libro libro)
         {
-            if (ModelState.IsValid)
-            {
-                db.Libros.Add(libro);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(libro);
+            String mensaje = String.Empty;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Libros.Add(libro);
+                    db.SaveChanges();
+                    mensaje = "Se han Guardado los datos del libro satisfactoriamente";
+                }
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Libro/Edit/5
