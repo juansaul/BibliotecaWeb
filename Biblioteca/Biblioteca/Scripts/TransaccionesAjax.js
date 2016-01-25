@@ -2,19 +2,22 @@
     var LibroId = 0
     //rellena la tabla de index
     function rellenarIndexLibros() {
+        //agarra el texto que deseas buscar
         var strBuscado = $("input[name='strBuscado']").val();
+        //se ejecuta una conexion con el servidor en la accion del controlador ajaxindex de la entidad del libro 
         $.ajax({
+            //se establece la ruta en la cual se ejecutara la accion
             url: "/Libro/AjaxIndex", //Accion a ejecutar en el server
-            contentType: "application/html; charset=utf-8",
-            type: "GET",
-            dataType: "html",
+            contentType: "application/html; charset=utf-8",//tipo de contenido que se enviara
+            type: "GET",//tipo de transaccion
+            dataType: "html",//tipo de archivo
             data: { strBuscado: strBuscado } //Dato enviado al server
-        }).success(function (result) {
-            var tablaLibros = $("#tablaLibros tbody");
-            tablaLibros.html("");
-            var conjutoLibros = JSON.parse(result);
+        }).success(function (result) {//si todo sale bien en la transaccion ajax entra aki
+            var tablaLibros = $("#tablaLibros tbody");//se crea una variable de tipo tbody de la tabla en la vista index
+            tablaLibros.html("");//se limpia la tabla
+            var conjutoLibros = JSON.parse(result);//se transforma el archivo json que biene en formato json de la base de datos de cadena de string a formato json puro
 
-            for (var indice in conjutoLibros) {
+            for (var indice in conjutoLibros) {// se rellena la tabla de libros con todos sus campos se reconstruye la tabla
                 var libro = conjutoLibros[indice];
                 tablaLibros.append("<tr>" +
                     "<td>" + libro.nombre + "</td>" + //Nombre grupo
@@ -33,16 +36,16 @@
                     "</tr>")
             }
 
-        }).error(function (xhr, status) {
+        }).error(function (xhr, status) {//si sale algun error en la transaccion ajax entra aki
 
         })
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////7
 
-    //Selecciona el id del libro para rellenar los campos en la forma de modificar
+   
     $("button#enlaceEditar").click(function () {
         var enlaceClickeado = $(this)
-        var noID = enlaceClickeado.attr("libroId")
+        var noID = enlaceClickeado.attr("libroId") //Selecciona el id del libro para rellenar los campos en la forma de modificar
         $.ajax({
             url: "/Libro/AjaxEdit", //Accion a ejecutar en el server
             contentType: "application/html; charset=utf-8",
