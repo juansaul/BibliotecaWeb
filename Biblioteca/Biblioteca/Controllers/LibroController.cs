@@ -67,7 +67,7 @@ namespace Biblioteca.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult Create(Libro libro)
         {
-
+            Ejemplar ejemplar = new Ejemplar();
             String mensaje = String.Empty;
 
             try
@@ -76,6 +76,15 @@ namespace Biblioteca.Controllers
                 {
                     db.Libros.Add(libro);
                     db.SaveChanges();
+                    int Contador = libro.noEjemplares;
+                    for (int c=0;c<Contador;c++)
+                    {
+                        ejemplar.nombreLibro = libro.nombre;
+                        db.ejemplares.Add(ejemplar);
+                        db.SaveChanges();
+                    }
+                  
+                    
                     mensaje = "Se han Guardado los datos del libro satisfactoriamente";
                 }
             }

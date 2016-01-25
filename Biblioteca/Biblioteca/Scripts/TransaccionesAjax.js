@@ -133,7 +133,6 @@
             año: $("#modalAlta input[name='año']").val(),
             noEjemplares: $("#modalAlta #noEjemplares").val()
         };
-
         $.ajax({
             url: '/Libro/Create',
             contentType: 'application/json; charset=utf-8',
