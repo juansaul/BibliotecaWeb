@@ -76,6 +76,7 @@
             $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
         })
     })
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //una vez rellenado el formulario modificado se manda a la base de datos para aguardarlo
     $("#btnEditar").click(function () {
         libroModificado = {
@@ -105,6 +106,8 @@
         })
         $("#modalEditar").modal("toggle");
     })
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $("button#enlaceBorrar").click(function () {
         LibroId = $(this).attr("libroId")
     })
@@ -126,6 +129,8 @@
 
 
     })
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $("#btnCrear").click(function () {
         nuevoLibro = {
             nombre: $("#modalAlta #nombre").val(),
@@ -152,6 +157,7 @@
         $("#modalAlta").modal("toggle");
     })
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $("button#enlaceDetalles").click(function () {
         var enlaceClickeado = $(this)
         var noID = enlaceClickeado.attr("libroId")
@@ -174,6 +180,92 @@
             "<p>" + "Descripcion: " + libro.descripcion + "</p>" +
             "<p >" + "Año: " + libro.año + "</p>" +
           "<p>" + "No.Ejemplares: " + libro.noEjemplares + "</p>")
+
+        }).error(function (xhr, status) {
+            /*Notificar al usuario de un error de comunicacion
+            con el server*/
+            $("#mensaje").removeClass('alert-danger alert-info');
+            $("#mensaje").html("Ha ocurrido un error: " + status).addClass('alert-danger');
+            $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
+        })
+    })
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////   EJEMPLAR   //////////////////////////////////////////////////////////////////////
+    $("button#EnlaseEliminar").click(function () {
+        idEjemplar = $(this).attr("idEjemplar")
+    })
+    //elimina un registro
+    $("button#btnEliminar").click(function () {
+        $.ajax({
+            url: '/Ejemplar/DeleteConfirmed',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: { idEjemplar: idEjemplar }, //Dato enviado al server
+            type: 'get',
+        }).success(function (result) {
+            rellenarIndexLibros();
+        }).error(function (xhr, status) {
+            alert("No se encontro el servidor," +
+                " verifique si se encuentra conectado a internet.");
+
+        })
+
+
+    })
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+
+    $("button#enlaceDetalles").click(function () {
+        var enlaceClickeado = $(this)
+        var noID = enlaceClickeado.attr("idEjemplar")
+        $.ajax({
+            url: "/Ejemplar/details", //Accion a ejecutar en el server
+            contentType: "application/html; charset=utf-8",
+            type: "GET",
+            dataType: "html",
+            data: { id: noID } //Dato enviado al server
+        }).success(function (result) { //result = {mensaje, status}
+            var ejemplar = JSON.parse(result);
+            var detalles = $("#detallesEjemplar");
+            detalles.html("");
+            //Con la información recibida, se rellena el formulario
+            detalles.append(
+             "<p>" + "Id Ejemplar: " + ejemplar.idEjemplar + "</p>" +
+             "<p>" + "Titulo: " + ejemplar.nombreLibro + "</p>" +
+             "<p>" + "Id Libro: " + ejemplar.libroId + "</p>")
+
+        }).error(function (xhr, status) {
+            /*Notificar al usuario de un error de comunicacion
+            con el server*/
+            $("#mensaje").removeClass('alert-danger alert-info');
+            $("#mensaje").html("Ha ocurrido un error: " + status).addClass('alert-danger');
+            $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
+        })
+    })
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //una vez rellenado el formulario modificado se manda a la base de datos para aguardarlo
+    $("button#enlaceEditar").click(function () {
+        var enlaceClickeado = $(this)
+        var noID = enlaceClickeado.attr("idEjemplar") //Selecciona el id del libro para rellenar los campos en la forma de modificar
+        $.ajax({
+            url: "/Ejemplar/AjaxEdit", //Accion a ejecutar en el server
+            contentType: "application/html; charset=utf-8",
+            type: "GET",
+            dataType: "html",
+            data: { idEjemplar: idEjemplar } //Dato enviado al server
+        }).success(function (result) { //result = {mensaje, status}
+            //Se obtiene la respuesta del server en forma de objeto
+            var libro = JSON.parse(result);
+
+            //Con la información recibida, se rellena el formulario
+            $("#modalEditar #libroId").val(idEjemplar.idEjemplar);
+            $("#modalEditar #nombre").val(idEjemplar.nombre);
+            $("#modalEditar #isbn").val(idEjemplar.isbn);
+            
+
 
         }).error(function (xhr, status) {
             /*Notificar al usuario de un error de comunicacion

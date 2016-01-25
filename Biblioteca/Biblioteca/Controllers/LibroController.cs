@@ -80,6 +80,7 @@ namespace Biblioteca.Controllers
                     for (int c=0;c<Contador;c++)
                     {
                         ejemplar.nombreLibro = libro.nombre;
+                     
                         db.ejemplares.Add(ejemplar);
                         db.SaveChanges();
                     }

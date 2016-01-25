@@ -11,10 +11,14 @@ namespace Biblioteca.Models
     {
         [Key]
         public int idEjemplar { get; set; }
+        [Display(Name = "Id Ejemplar")]
 
         public String nombreLibro { get; set; }
+        [Display(Name = "Titulo del libro")]
 
-        public virtual  Libro libroId { get; set; }
+        public virtual Libro libroId { get; set; }
+
+        
 
     }
 }

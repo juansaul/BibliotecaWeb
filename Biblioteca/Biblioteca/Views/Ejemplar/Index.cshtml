@@ -1,34 +1,139 @@
 ﻿@model IEnumerable<Biblioteca.Models.Ejemplar>
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Biblioteca.Models.Libro libro = new Biblioteca.Models.Libro();
+    Biblioteca.Models.Ejemplar nuevoEjemplar = new Biblioteca.Models.Ejemplar();
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCreate" style="margin-top: 20px">Nuevo ejemplar</button>
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
+<table class="table" >
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idEjemplar)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.nombreLibro)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.libroId)
+        </th>
+        <th >
+            <h1>                    </h1>
+        </th>
+       
+        
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.idEjemplar)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.nombreLibro)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idEjemplar }) |
+            @Html.DisplayFor(modelItem => item.libroId)
+        </td>
+        <td>
+            <button type="button" class="btn btn-info" id="enlaceDetalles" data-toggle="modal" data-target="#modalDetails" idEjemplar="@item.idEjemplar" >Detalles</button>
+            <button type="button" class="btn btn-success" id="enlaceEditar" data-toggle="modal" data-target="#modalEdit" idEjemplar="@item.idEjemplar">Editar</button>
+            <button type="button" class="btn btn-danger" id="EnlaseEliminar" data-toggle="modal" data-target="#modalDelete"  idEjemplar="@item.idEjemplar">Eliminar</button>
+
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.idEjemplar }) |
             @Html.ActionLink("Details", "Details", new { id=item.idEjemplar }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idEjemplar })
+            @Html.ActionLink("Delete", "Delete", new { id=item.idEjemplar })*@
         </td>
     </tr>
 }
 
 </table>
+
+<!-- Modal -->
+<div id="modalCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nuevo ejemplar</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nuevo ejemplar</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("Edit", nuevoEjemplar)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalDetails" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nuevo ejemplar</h4>
+            </div>
+            <div id="detallesEjemplar" class="modal-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nuevo ejemplar</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro que desea eliminar el siguiente ejemplar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnEliminar">Borrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

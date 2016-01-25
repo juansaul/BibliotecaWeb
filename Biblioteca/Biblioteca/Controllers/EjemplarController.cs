@@ -22,18 +22,13 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Ejemplar/Details/5
-        public ActionResult Details(int? id)
+        [HttpGet]
+        public JsonResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+         
             Ejemplar ejemplar = db.ejemplares.Find(id);
-            if (ejemplar == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ejemplar);
+           
+            return Json(ejemplar, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Ejemplar/Create
@@ -46,7 +41,7 @@ namespace Biblioteca.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idEjemplar,nombreLibro")] Ejemplar ejemplar)
         {
             if (ModelState.IsValid)
@@ -60,25 +55,20 @@ namespace Biblioteca.Controllers
         }
 
         // GET: Ejemplar/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public JsonResult AjaxEdit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Ejemplar ejemplar = db.ejemplares.Find(id);
-            if (ejemplar == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ejemplar);
+      
+            return Json(ejemplar, JsonRequestBehavior.AllowGet);
         }
-
+      
         // POST: Ejemplar/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult Edit([Bind(Include = "idEjemplar,nombreLibro")] Ejemplar ejemplar)
         {
             if (ModelState.IsValid)
@@ -106,14 +96,23 @@ namespace Biblioteca.Controllers
         }
 
         // POST: Ejemplar/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpGet]
+        public JsonResult DeleteConfirmed(int id = 0)
         {
-            Ejemplar ejemplar = db.ejemplares.Find(id);
-            db.ejemplares.Remove(ejemplar);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            String mensaje = String.Empty;
+            try
+            {
+                Ejemplar ejemplar = db.ejemplares.Find(id);
+                db.ejemplares.Remove(ejemplar);
+                db.SaveChanges();
+                mensaje = "Registro exitoso";
+            }catch(Exception ajax)
+            {
+                mensaje = "Hubo un problema al intentar acceder a la base de datos: "+ ajax.Message;
+            }
+            
+            
+            return Json(new { mensaje = mensaje  }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
