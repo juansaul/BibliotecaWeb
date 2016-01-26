@@ -275,6 +275,97 @@
             $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
         })
     })
+    ////////////////juanUsuarios/////////////////////////
+    /////////////Delete//////////////
+
+    $("button#enlaceBorrarUsuario").click(function () {
+        UsuarioIDs = $(this).attr("usuarioID")
+    })
+    //elimina un registro
+    $("button#btnBorrarUsuario").click(function () {
+        $.ajax({
+            url: "/Usuario/DeleteConfirmed",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {usuarioID:UsuarioIDs}, //Dato enviado al server
+            type: "Get",
+        }).success(function (result) {
+            RellenarTablaUsuario();
+        }).error(function (xhr, status) {
+            alert("No se encontro el servidor," +
+                " verifique si se encuentra conectado a internet.");
+
+        })
 
 
+    })
+    //////////////////////////////Crear USUAARIO////////
+    $("#btnCrearUsuario").click(function () {
+        nuevoUsuario = {
+            nombre: $("#modalAltaUsuario #nombre").val(),
+            apellido: $("#modalAltaUsuario #apellido").val(),
+            Telefono: $("#modalAltaUsuario #Telefono").val(),
+            correo: $("#modalAltaUsuario #correo").val(),
+            direccion: $("#modalAltaUsuario #direccion").val(),
+            curp: $("#modalAltaUsuario #curp").val(),
+            
+        };
+        $.ajax({
+            url: '/Usuario/Create',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(nuevoUsuario),
+            type: 'post',
+        }).success(function (result) {
+            RellenarTablaUsuario();
+           
+        }).error(function (xhr, status) {
+            alert("No se encontro el servidor," +
+                " verifique si se encuentra conectado a internet.");
+
+        })
+        $("#modalAltaUsuario").modal("toggle");
+    })
+
+    ////////////////////Mostrar usuarios////////////////////
+
+    function RellenarTablaUsuario() {
+        ////agarra el texto que deseas buscar
+        var strBuscado = $("input[name='strBuscado']").val();
+        //se ejecuta una conexion con el servidor en la accion del controlador ajaxindex de la entidad del libro 
+        $.ajax({
+            //se establece la ruta en la cual se ejecutara la accion
+            url: "/Usuario/AjaxIndex", //Accion a ejecutar en el server
+            contentType: "application/html; charset=utf-8",//tipo de contenido que se enviara
+            type: "GET",//tipo de transaccion
+            dataType: "html",//tipo de archivo
+            data: { strBuscado: strBuscado } //Dato enviado al server
+        }).success(function (result) {//si todo sale bien en la transaccion ajax entra aki
+            var tablaUsuarios = $("#tablaUsuarios tbody");//se crea una variable de tipo tbody de la tabla en la vista index
+            tablaUsuarios.html("");//se limpia la tabla
+            var conjutoUsuarios = JSON.parse(result);//se transforma el archivo json que biene en formato json de la base de datos de cadena de string a formato json puro
+
+            for (var indice in conjutoUsuarios) {// se rellena la tabla de libros con todos sus campos se reconstruye la tabla
+                var usuario = conjutoUsuarios[indice];
+                tablaUsuarios.append("<tr>" +
+                    "<td>" + usuario.nombre+"</td>" + //Nombre grupo
+                    "<td>" + " " + usuario.apellido + "</td>" + //nombre
+                    "<td>" + usuario.Telefono + "</td>" + //apellidoP
+                    "<td>" + usuario.correo + "</td>" + //apellidoM
+                    "<td>" + usuario.direccion + //fechaNac
+                    "<td>" +
+                     "<td>" + usuario.año+"</td>" + //fechaNac
+                    "<td>" +
+                    "<button id='enlaceDetallesUsuario' class='btn btn-info' data-toggle='modal' data-target='#modalDetalles' UsuarioID='" + usuario.usuarioID + "'>Detalles</button>"
+                    +
+                    "<button id='enlaceBorrarUsuario' class='btn btn-danger' data-toggle='modal' data-target='#modalBorrar' UsuarioID='" + usuario.usuarioID + "' style='margin-left:auto'>Borrar</button>" +
+                    "<button id='enlaceEditarUsuario' class='btn btn-success' data-toggle='modal' data-target='#modalEditar' UsuarioID='" + usuario.usuarioID + "'>Editar</button>" +
+                    "</td>" +
+                    "</tr>")
+            }
+
+        }).error(function (xhr, status) {//si sale algun error en la transaccion ajax entra aki
+
+        })
+    }
 })
