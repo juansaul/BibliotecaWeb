@@ -288,7 +288,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: {usuarioID:UsuarioIDs}, //Dato enviado al server
-            type: "Get",
+            type: "GET",
         }).success(function (result) {
             RellenarTablaUsuario();
         }).error(function (xhr, status) {
@@ -311,11 +311,11 @@
             
         };
         $.ajax({
-            url: '/Usuario/Create',
+            url: '/Usuario/CreateAjax',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(nuevoUsuario),
-            type: 'post',
+            type: 'POST',
         }).success(function (result) {
             RellenarTablaUsuario();
            
@@ -331,7 +331,7 @@
 
     function RellenarTablaUsuario() {
         ////agarra el texto que deseas buscar
-        var strBuscado = $("input[name='strBuscado']").val();
+        //var strBuscado = $("input[name='strBuscado']").val();
         //se ejecuta una conexion con el servidor en la accion del controlador ajaxindex de la entidad del libro 
         $.ajax({
             //se establece la ruta en la cual se ejecutara la accion
@@ -368,4 +368,71 @@
 
         })
     }
+
+    /////////////////////////modificar ususarios
+    $("button#enlaceEditarUsuario").click(function () {
+        var enlaceClickeado = $(this)
+        var noID = enlaceClickeado.attr("usuarioID") //Selecciona el id del libro para rellenar los campos en la forma de modificar
+        $.ajax({
+            url: "/Usuario/AjaxEdit", //Accion a ejecutar en el server
+            contentType: "application/html; charset=utf-8",
+            type: "GET",
+            dataType: "html",
+            data: { usuarioID: noID } //Dato enviado al server
+        }).success(function (result) { //result = {mensaje, status}
+            //Se obtiene la respuesta del server en forma de objeto
+            var USUARIO = JSON.parse(result);
+
+            //Con la información recibida, se rellena el formulario
+            $("#modalEditarUsuario #usuarioID").val(USUARIO.usuarioID);
+            $("#modalEditarUsuario #nombre").val(USUARIO.nombre);
+            $("#modalEditarUsuario #apellido").val(USUARIO.apellido);
+            $("#modalEditarUsuario #Telefono").val(USUARIO.Telefono);
+            $("#modalEditarUsuario #correo").val(USUARIO.correo);
+            $("#modalEditarUsuario #direccion").val(USUARIO.direccion);
+            $("#modalEditarUsuario #curp").val(USUARIO.curp);
+
+            /////////////////////////ahora a guardar los datos modificados en la base ddatos////////
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //una vez rellenado el formulario modificado se manda a la base de datos para aguardarlo
+            $("#btnEditarUsuario").click(function () {
+                usuariomodificado = {
+                    usuarioID: $("#modalEditarUsuario #usuarioID").val(),
+                    nombre: $("#modalEditarUsuario #nombre").val(),
+                    apellido: $("#modalEditarUsuario #apellido").val(),
+                    Telefono: $("#modalEditarUsuario #Telefono").val(),
+                    correo: $("#modalEditarUsuario #correo").val(),
+                    direccion: $("#modalEditarUsuario #direccion").val(),
+                    curp: $("#modalEditarUsuario #curp").val(),
+                    
+
+                };
+
+                $.ajax({
+                    url: '/Usuario/AjaxEdit',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify(usuariomodificado),
+                    type: 'POST',
+                }).success(function (result) {
+                    RellenarTablaUsuario();
+                }).error(function (xhr, status) {
+                    alert("No se encontro el servidor," +
+                        " verifique si se encuentra conectado a internet.");
+
+                })
+                $("#modalEditarUsuario").modal("toggle");
+            })
+
+        }).error(function (xhr, status) {
+            /*Notificar al usuario de un error de comunicacion
+            con el server*/
+            $("#mensaje").removeClass('alert-danger alert-info');
+            $("#mensaje").html("Ha ocurrido un error: " + status).addClass('alert-danger');
+            $("#mensaje").fadeIn(500).delay(2000).fadeOut(500);
+        })
+    })
 })
