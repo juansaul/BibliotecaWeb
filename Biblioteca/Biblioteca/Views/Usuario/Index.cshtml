@@ -2,37 +2,43 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Biblioteca.Models.Usuario nuevoUsuario = new Biblioteca.Models.Usuario();
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAltaUsuario" style="margin-top: 20px">Nuevo usuario</button>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.apellido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.correo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.direccion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.curp)
-        </th>
-        <th></th>
-    </tr>
-
+</p>*@
+<input type="text" name="strBuscado" value="" placeholder="buscar un usuario" />
+<button>Buscar</button>
+<table class="table" id="tablaUsuarios">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.curp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+<tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -54,11 +60,98 @@
             @Html.DisplayFor(modelItem => item.curp)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.usuarioID }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.usuarioID }) |
             @Html.ActionLink("Details", "Details", new { id=item.usuarioID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.usuarioID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.usuarioID })*@
+            <button type="button" class="btn btn-info" id="enlaceDetallesUsuario" data-toggle="modal" data-target="#modalDetallesUsuario" UsuarioID="@item.usuarioID">Detalles</button>
+            <button name="Borrar" type="button" class="btn btn-danger" id="enlaceBorrarUsuario" data-toggle="modal" data-target="#modalBorrarUsuario" UsuarioID="@item.usuarioID" style="margin-left:auto">Borrar</button>
+            <button type="button" class="btn btn-success" id="enlaceEditarUsuario" data-toggle="modal" data-target="#modalEditarUsuario" UsuarioID="@item.usuarioID">Editar</button>
         </td>
     </tr>
 }
+    </tbody>
 
 </table>
+
+<div id="modalDetallesUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detalles</h4>
+            </div>
+            <div class="modal-body">
+                <div id="detalleslibros" style="text-align:center">
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalBorrarUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Eliminar</h4>
+            </div>
+            <div class="modal-body">
+                <p>Esta Seguro Que Desea Borrar Este registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnBorrarUsuario" type="button" class="btn btn-default" data-dismiss="modal">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditarUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modificar</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("Edit", nuevoUsuario)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalAltaUsuario" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registro de nuevo </h4>
+            </div>
+
+            <div class="modal-body">
+                @Html.Partial("Create", nuevoUsuario)
+                @*<p>Modal para Crear un nuevo libro</p>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

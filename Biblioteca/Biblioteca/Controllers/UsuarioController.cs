@@ -15,106 +15,162 @@ namespace Biblioteca.Controllers
     {
         private Contexto db = new Contexto();
 
-        // GET: Usuario
+        [HttpGet]
+        public JsonResult AjaxIndex()
+        {
+            //var alumnos = db.alumnos.ToList();
+
+            var Usuarios = from usuario in db.usuarios
+                         //where usuario.nombre.Contains(strBuscado)
+                         select new
+                         {
+                             usuarioId = usuario.usuarioID,
+                             nombre = usuario.nombre,
+                             apellido = usuario.apellido,
+                             telefono = usuario.Telefono,
+                             correo = usuario.correo,
+                             direccion = usuario.direccion,
+                             curp= usuario.curp
+                            
+                         };
+
+            return Json(Usuarios, JsonRequestBehavior.AllowGet);
+        }
+
+         //GET: Usuario
         public ActionResult Index()
         {
             return View(db.usuarios.ToList());
         }
 
-        // GET: Usuario/Details/5
-        public ActionResult Details(int? id)
+        //// GET: Usuario/Details/5
+
+
+       [HttpGet]
+        public JsonResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
+            /*Un objeto instanciado del modelo de datos*/
+            Usuario USUARIO = db.usuarios.Find(id);
+
+           
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(USUARIO, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Usuario/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Usuario/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        public JsonResult CreateAjax(Usuario usuario)
         {
-            if (ModelState.IsValid)
-            {
-                db.usuarios.Add(usuario);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+           
+            String mensaje = String.Empty;
 
-            return View(usuario);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.usuarios.Add(usuario);
+                    db.SaveChanges();
+                   
+
+
+                    mensaje = "Se ha registrado el usuario exitosamente woeee no mames";
+                }
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Usuario/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
-        }
+        
+
+        //// GET: Usuario/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Usuario usuario = db.usuarios.Find(id);
+        //    if (usuario == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(usuario);
+        //}
 
         // POST: Usuario/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "usuarioID,nombre,apellido,Telefono,correo,direccion,curp")] Usuario usuario)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(usuario).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(usuario);
+        //}
+
+        [HttpGet]
+        public JsonResult AjaxEdit(int usuarioID = 0)
         {
-            if (ModelState.IsValid)
+            /*Un objeto instanciado del modelo de datos*/
+            Usuario usuario = db.usuarios.Find(usuarioID);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(usuario, JsonRequestBehavior.AllowGet);
+        }
+
+        
+       
+
+
+        [HttpPost]
+        public JsonResult AjaxEdit(Usuario usuario)
+        {
+            String mensaje = String.Empty;
+
+            try
             {
                 db.Entry(usuario).State = EntityState.Modified;
+                int c = db.SaveChanges();
+                mensaje = "Se ha editado los datos del libro satisfactoriamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+
+
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult DeleteConfirmed(int? usuarioID = 0)
+        {
+            String mensaje = String.Empty;
+            try
+            {
+                Usuario usuario = db.usuarios.Find(usuarioID);
+                db.usuarios.Remove(usuario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                mensaje = "Se ha eliminado el libro satisfactoriamente";
             }
-            return View(usuario);
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
-        }
-
-        // POST: Usuario/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Usuario usuario = db.usuarios.Find(id);
-            db.usuarios.Remove(usuario);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+     
 
         protected override void Dispose(bool disposing)
         {

@@ -24,7 +24,9 @@ namespace Biblioteca
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/misjs").Include(
+                "~/Scripts/ajaxCrud.js",
                    "~/Scripts/TransaccionesAjax.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
