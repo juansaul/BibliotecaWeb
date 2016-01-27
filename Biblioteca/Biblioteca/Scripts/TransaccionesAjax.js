@@ -193,6 +193,41 @@
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////   EJEMPLAR   //////////////////////////////////////////////////////////////////////
+    function rellenarIndexEjemplares() {
+        //agarra el texto que deseas buscar
+        var strBuscado = $("input[name='strBuscado']").val();
+        //se ejecuta una conexion con el servidor en la accion del controlador ajaxindex de la entidad del libro 
+        $.ajax({
+            //se establece la ruta en la cual se ejecutara la accion
+            url: "/Ejemplar/AjaxIndex", //Accion a ejecutar en el server
+            contentType: "application/html; charset=utf-8",//tipo de contenido que se enviara
+            type: "GET",//tipo de transaccion
+            dataType: "html",//tipo de archivo
+            data: { strBuscado: strBuscado } //Dato enviado al server
+        }).success(function (result) {//si todo sale bien en la transaccion ajax entra aki
+            var tablaEjemplares = $("#tablaEjemplares tbody");//se crea una variable de tipo tbody de la tabla en la vista index
+            tablaEjemplares.html("");//se limpia la tabla
+            var conjutoEjemplares = JSON.parse(result);//se transforma el archivo json que biene en formato json de la base de datos de cadena de string a formato json puro
+
+            for (var indice in conjutoEjemplares) {// se rellena la tabla de libros con todos sus campos se reconstruye la tabla
+                var ejemplar = conjutoEjemplares[indice];
+                tablaEjemplares.append("<tr>" +
+                    "<td>" + ejemplar.idEjemplar + "</td>" +
+                    "<td>" + " " + ejemplar.nombreLibro + "</td>" + //nombre
+                    "<td>" + ejemplar.libroId + "</td>" +
+                    "<button id='enlaceDetalles' class='btn btn-info' data-toggle='modal' data-target='#modalDetalles' libroId='" + ejemplar.idEjemplar + "'>Detalles</button>"
+                    +
+                    "<button id='enlaceBorrar' class='btn btn-danger' data-toggle='modal' data-target='#modalBorrar' libroId='" + ejemplar.idEjemplar + "' style='margin-left:auto'>Borrar</button>" +
+                    "<button id='enlaceEditar' class='btn btn-success' data-toggle='modal' data-target='#modalEditar' libroId='" + ejemplar.idEjemplar + "'>Editar</button>" +
+                    "</td>" +
+                    "</tr>")
+            }
+
+        }).error(function (xhr, status) {//si sale algun error en la transaccion ajax entra aki
+
+        })
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $("button#EnlaseEliminar").click(function () {
         idEjemplar = $(this).attr("idEjemplar")
     })
@@ -202,10 +237,10 @@
             url: '/Ejemplar/DeleteConfirmed',
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
-            data: { idEjemplar: idEjemplar }, //Dato enviado al server
+            data: { id: idEjemplar }, //Dato enviado al server
             type: 'get',
         }).success(function (result) {
-            rellenarIndexLibros();
+            rellenarIndexEjemplares()
         }).error(function (xhr, status) {
             alert("No se encontro el servidor," +
                 " verifique si se encuentra conectado a internet.");

@@ -14,7 +14,9 @@
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCreate" style="margin-top: 20px">Nuevo ejemplar</button>
     @*@Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table" >
+<input type="text" name="strBuscado" value="" placeholder="Buscar ejemplar" />
+<button>Buscar</button>
+<table class="table" id="tablaEjemplares" >
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.idEjemplar)
@@ -31,30 +33,31 @@
        
         
     </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idEjemplar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombreLibro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libroId)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" id="enlaceDetalles" data-toggle="modal" data-target="#modalDetails" idEjemplar="@item.idEjemplar">Detalles</button>
+                    <button type="button" class="btn btn-success" id="enlaceEditar" data-toggle="modal" data-target="#modalEdit" idEjemplar="@item.idEjemplar">Editar</button>
+                    <button type="button" class="btn btn-danger" id="EnlaseEliminar" data-toggle="modal" data-target="#modalDelete" idEjemplar="@item.idEjemplar">Eliminar</button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.idEjemplar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombreLibro)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.libroId)
-        </td>
-        <td>
-            <button type="button" class="btn btn-info" id="enlaceDetalles" data-toggle="modal" data-target="#modalDetails" idEjemplar="@item.idEjemplar" >Detalles</button>
-            <button type="button" class="btn btn-success" id="enlaceEditar" data-toggle="modal" data-target="#modalEdit" idEjemplar="@item.idEjemplar">Editar</button>
-            <button type="button" class="btn btn-danger" id="EnlaseEliminar" data-toggle="modal" data-target="#modalDelete"  idEjemplar="@item.idEjemplar">Eliminar</button>
-
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.idEjemplar }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idEjemplar }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idEjemplar })*@
-        </td>
-    </tr>
-}
-
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.idEjemplar }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.idEjemplar }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.idEjemplar })*@
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <!-- Modal -->
@@ -105,7 +108,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Nuevo ejemplar</h4>
+               
             </div>
             <div id="detallesEjemplar" class="modal-body">
                

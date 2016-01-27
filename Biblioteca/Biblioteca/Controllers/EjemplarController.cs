@@ -14,7 +14,23 @@ namespace Biblioteca.Controllers
     public class EjemplarController : Controller
     {
         private Contexto db = new Contexto();
+        [HttpGet]
+        public JsonResult AjaxIndex(String strBuscado)
+        {
+            //var alumnos = db.alumnos.ToList();
 
+            var Ejemplares = from Ejemplar in db.ejemplares
+                         where Ejemplar.nombreLibro.Contains(strBuscado)
+                         select new
+                         {
+                             libroId = Ejemplar.idEjemplar,
+                             nombre = Ejemplar.nombreLibro,
+                             isbn = Ejemplar.libroId,
+                            
+                         };
+
+            return Json(Ejemplares, JsonRequestBehavior.AllowGet);
+        }
         // GET: Ejemplar
         public ActionResult Index()
         {
